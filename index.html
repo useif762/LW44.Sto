@@ -4,12 +4,12 @@
  <link rel="icon" href="LW33.jpg" type="image/jpg">
  <meta charset="UTF-8" />
  <meta name="viewport" content="width=device-width, initial-scale=1" />
- <title>LH44 Store</title>
+ <title>  LH44 Store</title>
  <style>
  body {
  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
- background: #111111;
- color: #eee;
+ background: #eee;
+ color: #111111;
  margin: 0;
  padding: 0;
  }
@@ -25,8 +25,8 @@
  left: 0;
  width: 100%;
  height: 100%;
- background: #1a1a1a;
- color: #eee;
+ background: #eee;
+ color: #111;
  display: flex;
  flex-direction: column;
  justify-content: center;
@@ -72,7 +72,7 @@
  left: 0;
  width: fit-content;
  margin: auto;
- background-color: #4f25f9;
+ background-color: #90021b;
  color: #1a1a1a;
  padding: 15px 30px;
  border-bottom-left-radius: 10px;
@@ -88,7 +88,7 @@
 
 
  header {
- background: #c8102e;
+ background: #eee;
  padding: 10px 20px;
  display: flex;
  align-items: center;
@@ -124,22 +124,22 @@
  }
  nav button {
  background: transparent;
- border: none;
- color: #eee;
+ border:none;
+ color: #fff;
  font-size: 1rem;
  padding: 6px 10px;
  border-radius: 5px;
  transition: background 0.3s;
  }
  nav button:hover {
- background: #0d0d0d;
+ background: #eee;
  }
 
 
  #cart-icon {
  position: relative;
  font-size: 1.5rem;
- color: #eee;
+ color: #111111;
  }
  #cart-icon:hover {
  color: #f9a825;
@@ -165,7 +165,7 @@
  padding: 20px;
  max-width: 1200px;
  margin: 40px auto;
- background: #111111;
+ background: #eee;
  border-radius: 10px;
  }
  .active-section {
@@ -208,7 +208,7 @@
 
 
  .product-card {
- background: #2c2c2c;
+ background: #ffffff;
  border-radius: 10px;
  overflow: hidden;
  box-shadow: 0 0 8px #0008;
@@ -257,10 +257,10 @@
  }
 
 
- .btn-details { background-color: #007acc; }
- .btn-details:hover { background-color: #005a99; }
- .btn-add-cart { background-color: #f9a825; color: #1a1a1a; font-weight: 700; }
- .btn-add-cart:hover { background-color: #c7a500; }
+ .btn-details { background-color: #444; }
+ .btn-details:hover { background-color: #444; }
+ .btn-add-cart { background-color: #444; color: #ffffff; font-weight: 700; }
+ .btn-add-cart:hover { background-color: #444; }
  .btn-buy-now { background-color: #c8102e; font-weight: 700; }
  .btn-buy-now:hover { background-color: #90021b; }
 
@@ -328,8 +328,8 @@
  cursor: pointer;
  transition: background-color 0.3s;
  }
- #add-to-cart-btn { background-color: #f9a825; color: #1a1a1a; }
- #add-to-cart-btn:hover { background-color: #c7a500; }
+ #add-to-cart-btn { background-color: #111111; color: #ffffff; }
+ #add-to-cart-btn:hover { background-color: #444; }
  #buy-now-btn { background-color: #c8102e; color: white; }
  #buy-now-btn:hover { background-color: #90021b; }
 
@@ -523,16 +523,16 @@
 
 <header>
  <div id="logo">
- <h1>LH44</h1>
+ <h1>  LH44  </h1> 
  </div>
- <nav>
- <button onclick="showSection('home')">الرئيسية</button>
- <button onclick="showSection('products')">المنتجات</button>
- <button onclick="showSection('about')">عنا</button>
- <button onclick="showSection('contact')">للتواصل معنا</button>
- <button onclick="showSection('cart')" class="cart-btn">
+ <nav> 
+ <button onclick="showSection('home')" style="background-color: #c8102e;">الرئيسية</button>
+ <button onclick="showSection('products')"  style="background-color: #c8102e;">المنتجات</button>
+ <button onclick="showSection('about')"  style="background-color: #c8102e;">عنا</button>
+ <button onclick="showSection('contact')"  style="background-color: #c8102e;">التواصل معنا</button>
+ <button onclick="showSection('cart')" class="cart-btn" >
  <div id="cart-icon" title="عربة التسوق">
- 🛒 <span class="cart-count"></span>
+ 🛒 <span class="cart-count"></span> 
  </div>
  </button>
  </nav>
