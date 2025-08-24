@@ -1,909 +1,1000 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <link rel="icon" href="LW33.jpg" type="image/jpg">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LH44 Store</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #1a1a1a;
-            color: #eee;
-            margin: 0;
-            padding: 0;
-        }
-        a, button {
-            cursor: pointer;
-        }
+ <link rel="icon" href="LW33.jpg" type="image/jpg">
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <title>LH44 Store</title>
+ <style>
+ body {
+ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ background: #111111;
+ color: #eee;
+ margin: 0;
+ padding: 0;
+ }
+ a, button {
+ cursor: pointer;
+ }
 
-        /* Splash Screen */
-        #splash-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #1a1a1a;
-            color: #eee;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
-            gap: 20px;
-        }
-        #splash-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        #splash-screen h1 {
-            font-size: 5rem;
-            font-weight: 900;
-            margin: 0;
-        }
-        .loading-dots {
-            display: flex;
-            gap: 5px;
-        }
-        .loading-dots span {
-            width: 10px;
-            height: 10px;
-            background: #f9a825;
-            border-radius: 50%;
-            animation: bounce 1.4s infinite ease-in-out both;
-        }
-        .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
-        .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
-        @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1.0); }
-        }
 
-        /* Notification */
-        #notification {
-            position: fixed;
-            top: 0;
-            right: 0;
-            left: 0;
-            width: fit-content;
-            margin: auto;
-            background-color: #4f25f9;
-            color: #1a1a1a;
-            padding: 15px 30px;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            z-index: 1000;
-            transform: translateY(-100%);
-            transition: transform 0.5s ease-out;
-        }
-        #notification.visible {
-            transform: translateY(0);
-        }
+ /* Splash Screen */
+ #splash-screen {
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ background: #1a1a1a;
+ color: #eee;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ z-index: 9999;
+ opacity: 1;
+ transition: opacity 0.5s ease-in-out;
+ gap: 20px;
+ }
+ #splash-screen.hidden {
+ opacity: 0;
+ pointer-events: none;
+ }
+ #splash-screen h1 {
+ font-size: 5rem;
+ font-weight: 900;
+ margin: 0;
+ }
+ .loading-dots {
+ display: flex;
+ gap: 5px;
+ }
+ .loading-dots span {
+ width: 10px;
+ height: 10px;
+ background: #f9a825;
+ border-radius: 50%;
+ animation: bounce 1.4s infinite ease-in-out both;
+ }
+ .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+ .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+ @keyframes bounce {
+ 0%, 80%, 100% { transform: scale(0); }
+ 40% { transform: scale(1.0); }
+ }
 
-        header {
-            background: #c8102e;
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-             position: fixed; /* يجعل الشريط ثابتاً في مكانه */
-    top: 0;          /* يثبته في أعلى الصفحة */
-    width: 100%;     /* يجعله يغطي عرض الشاشة بالكامل */
-    z-index: 100;    /* يجعله يظهر فوق بقية المحتوى */
-        }
-        header h1 {
-            margin: 0;
-            font-size: 1.8rem;
-            font-weight: 900;
-        }
-        #logo {
-            display: flex;
-            align-items: center;
-        }
-        #logo img {
-            height: 40px;
-            margin-left: 10px;
-        }
-        nav {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        nav button {
-            background: transparent;
-            border: none;
-            color: #eee;
-            font-size: 1rem;
-            padding: 6px 10px;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        nav button:hover {
-            background: #0d0d0d;
-        }
 
-        #cart-icon {
-            position: relative;
-            font-size: 1.5rem;
-            color: #eee;
-        }
-        #cart-icon:hover {
-            color: #f9a825;
-        }
-        .cart-count {
-            position: absolute;
-            background: #f9a825;
-            color: #1a1a1a;
-            font-weight: 700;
-            font-size: 0.8rem;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 18px;
-        }
+ /* Notification */
+ #notification {
+ position: fixed;
+ top: 0;
+ right: 0;
+ left: 0;
+ width: fit-content;
+ margin: auto;
+ background-color: #4f25f9;
+ color: #1a1a1a;
+ padding: 15px 30px;
+ border-bottom-left-radius: 10px;
+ border-bottom-right-radius: 10px;
+ box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+ z-index: 1000;
+ transform: translateY(-100%);
+ transition: transform 0.5s ease-out;
+ }
+ #notification.visible {
+ transform: translateY(0);
+ }
 
-        .section {
-            display: none;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 40px auto;
-            background: #2c2c2c;
-            border-radius: 10px;
-        }
-        .active-section {
-            display: block;
-        }
-        #home {
-            background: none;
-            margin-top: 20px;
-        }
-        
-        /* Filter controls */
-        .filter-controls {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .filter-controls button {
-            background-color: #444;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            margin: 0 5px;
-            border-radius: 5px;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-        .filter-controls button.active {
-            background-color: #c8102e;
-        }
-        .filter-controls button:hover {
-            background-color: #c8102e;
-        }
 
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-            gap: 20px;
-        }
+ header {
+ background: #c8102e;
+ padding: 10px 20px;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ flex-wrap: wrap;
+ position: fixed;
+ top: 0;
+ width: 100%;
+ z-index: 100;
+ transition: transform 0.3s ease-in-out;
+ }
+ header.hidden {
+ transform: translateY(-100%);
+ }
+ header h1 {
+ margin: 0;
+ font-size: 1.8rem;
+ font-weight: 900;
+ }
+ #logo {
+ display: flex;
+ align-items: center;
+ }
+ #logo img {
+ height: 40px;
+ margin-left: 10px;
+ }
+ nav {
+ display: flex;
+ align-items: center; /* لضمان محاذاة كل العناصر في سطر واحد */
+ gap: 10px;
+ flex-wrap: wrap;
+ }
+ nav button {
+ background: transparent;
+ border: none;
+ color: #eee;
+ font-size: 1rem;
+ padding: 6px 10px;
+ border-radius: 5px;
+ transition: background 0.3s;
+ }
+ nav button:hover {
+ background: #0d0d0d;
+ }
 
-        .product-card {
-            background: #2c2c2c;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 0 8px #0008;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.3s;
-        }
-        .product-card:hover {
-            transform: scale(1.03);
-        }
-        .product-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background: #000;
-        }
-        .product-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin: 10px 15px 5px 15px;
-        }
-        .product-price {
-            color: #f9a825;
-            font-weight: 700;
-            margin: 0 15px 10px 15px;
-        }
 
-        .product-actions {
-            display: flex;
-            justify-content: space-around;
-            margin: 0 15px 15px 15px;
-            gap: 8px;
-        }
+ #cart-icon {
+ position: relative;
+ font-size: 1.5rem;
+ color: #eee;
+ }
+ #cart-icon:hover {
+ color: #f9a825;
+ }
+ .cart-count {
+ position: absolute;
+ background: #f9a825;
+ color: #1a1a1a;
+ font-weight: 700;
+ font-size: 0.8rem;
+ width: 18px;
+ height: 18px;
+ border-radius: 50%;
+ text-align: center;
+ line-height: 18px;
+ top: -5px;
+ left: -5px;
+ }
 
-        .btn-details, .btn-add-cart, .btn-buy-now {
-            border: none;
-            color: white;
-            padding: 8px 10px;
-            border-radius: 5px;
-            flex-grow: 1;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
 
-        .btn-details { background-color: #007acc; }
-        .btn-details:hover { background-color: #005a99; }
-        .btn-add-cart { background-color: #f9a825; color: #1a1a1a; font-weight: 700; }
-        .btn-add-cart:hover { background-color: #c7a500; }
-        .btn-buy-now { background-color: #c8102e; font-weight: 700; }
-        .btn-buy-now:hover { background-color: #90021b; }
+ .section {
+ display: none;
+ padding: 20px;
+ max-width: 1200px;
+ margin: 40px auto;
+ background: #111111;
+ border-radius: 10px;
+ }
+ .active-section {
+ display: block;
+ }
+ /* Adjusted top margin for sections to avoid overlap with fixed header */
+ #home, #products, #about, #contact, #cart, #checkout, #product-details {
+ margin-top: 150px; /* Increased margin for better visibility on small screens */
+ }
 
-        /* تعديلات الـ CSS للصور المتعددة */
-        #product-details .image-gallery {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        #product-details .image-gallery img {
-            max-width: 100%;
-            border-radius: 10px;
-            transition: opacity 0.5s ease-in-out;
-            max-height: 400px;
-            object-fit: contain;
-        }
-        #product-details .gallery-btn {
-            position: absolute;
-            background-color: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            font-size: 1.5rem;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            z-index: 10;
-        }
-        #product-details .gallery-btn:hover {
-            background-color: rgba(0,0,0,0.8);
-        }
-        #product-details .gallery-btn.prev {
-            left: 10px;
-        }
-        #product-details .gallery-btn.next {
-            right: 10px;
-        }
 
-        #product-details h2 { margin-top: 0; }
-        #product-details p { line-height: 1.6; }
-        #product-details .details-actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-        #product-details label { font-weight: 600; }
-        #product-details select,
-        #product-details input[type="number"] {
-            padding: 6px;
-            border-radius: 5px;
-            border: none;
-            width: 80px;
-            text-align: center;
-        }
-        #product-details button {
-            padding: 10px 15px;
-            border-radius: 5px;
-            border: none;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        #add-to-cart-btn { background-color: #f9a825; color: #1a1a1a; }
-        #add-to-cart-btn:hover { background-color: #c7a500; }
-        #buy-now-btn { background-color: #c8102e; color: white; }
-        #buy-now-btn:hover { background-color: #90021b; }
+ /* Filter controls */
+ .filter-controls {
+ text-align: center;
+ margin-bottom: 20px;
+ }
+ .filter-controls button {
+ background-color: #444;
+ color: white;
+ border: none;
+ padding: 10px 15px;
+ margin: 0 5px;
+ border-radius: 5px;
+ font-weight: 600;
+ transition: background-color 0.3s;
+ }
+ .filter-controls button.active {
+ background-color: #c8102e;
+ }
+ .filter-controls button:hover {
+ background-color: #c8102e;
+ }
 
-        #cart-items {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .cart-item {
-            display: flex;
-            gap: 15px;
-            background: #3a3a3a;
-            border-radius: 10px;
-            padding: 10px;
-            align-items: center;
-        }
-        .cart-item img {
-            width: 100px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 6px;
-        }
-        .cart-item-info p { margin: 3px 0; }
-        .delete-btn {
-            background-color: #c8102e;
-            border: none;
-            color: white;
-            padding: 6px 10px;
-            border-radius: 5px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .delete-btn:hover { background-color: #90021b; }
 
-        #buy-all-btn {
-            background-color: #007acc;
-            color: white;
-            padding: 12px 18px;
-            border: none;
-            font-weight: 700;
-            border-radius: 7px;
-            margin-top: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        #buy-all-btn:hover { background-color: #005a99; }
+ .products-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+ gap: 20px;
+ }
 
-        form {
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        form label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 700;
-        }
-        form input, form select {
-            width: 100%;
-            padding: 8px 10px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-            border: none;
-            font-size: 1rem;
-            box-sizing: border-box;
-        }
-        #payment-methods {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 15px;
-        }
-        #payment-methods label {
-            font-weight: normal;
-            cursor: pointer;
-        }
-        #payment-methods input[type="radio"] {
-            margin-left: 6px;
-            cursor: pointer;
-        }
-        #visa-info {
-            display: none;
-            background: #1a1a1a;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-        #confirm-payment-btn {
-            background-color: #c8102e;
-            color: white;
-            padding: 14px 20px;
-            border: none;
-            font-weight: 800;
-            font-size: 1.1rem;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            width: 100%;
-        }
-        #confirm-payment-btn:hover { background-color: #90021b; }
 
-        #about p {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            text-align: center;
-        }
-        .social-links {
-            text-align: center;
-            padding: 20px 0;
-        }
-        .social-links a {
-            margin: 0 20px;
-            display: inline-block;
-            transition: transform 0.2s ease-in-out;
-        }
-        .social-links a:hover {
-            transform: scale(1.15);
-        }
-        .social-links svg {
-            width: 50px;
-            height: 50px;
-            fill: #eee;
-        }
+ .product-card {
+ background: #2c2c2c;
+ border-radius: 10px;
+ overflow: hidden;
+ box-shadow: 0 0 8px #0008;
+ display: flex;
+ flex-direction: column;
+ justify-content: space-between;
+ transition: transform 0.3s;
+ }
+ .product-card:hover {
+ transform: scale(1.03);
+ }
+ .product-card img {
+ width: 100%;
+ height: 200px;
+ object-fit: cover;
+ background: #000;
+ }
+ .product-name {
+ font-size: 1.1rem;
+ font-weight: 600;
+ margin: 10px 15px 5px 15px;
+ }
+ .product-price {
+ color: #f9a825;
+ font-weight: 700;
+ margin: 0 15px 10px 15px;
+ }
 
-        #product-details div {
-            margin-bottom: 15px;
-        }
 
-        @media (max-width: 768px) {
-            nav {
-                justify-content: center;
-                width: 100%;
-                margin-top: 10px;
-            }
-        }
-        @media (max-width: 600px) {
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-            .product-card img { height: 150px; }
-            .cart-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .cart-item img {
-                width: 100%;
-                height: auto;
-            }
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: #111;
-            font-size: 0.9em;
-            color: #aaa;
-        }
-    </style>
+ .product-actions {
+ display: flex;
+ justify-content: space-around;
+ margin: 0 15px 15px 15px;
+ gap: 8px;
+ }
+
+
+ .btn-details, .btn-add-cart, .btn-buy-now {
+ border: none;
+ color: white;
+ padding: 8px 10px;
+ border-radius: 5px;
+ flex-grow: 1;
+ font-weight: 600;
+ transition: background-color 0.3s;
+ }
+
+
+ .btn-details { background-color: #007acc; }
+ .btn-details:hover { background-color: #005a99; }
+ .btn-add-cart { background-color: #f9a825; color: #1a1a1a; font-weight: 700; }
+ .btn-add-cart:hover { background-color: #c7a500; }
+ .btn-buy-now { background-color: #c8102e; font-weight: 700; }
+ .btn-buy-now:hover { background-color: #90021b; }
+
+
+ /* تعديلات الـ CSS للصور المتعددة */
+ #product-details .image-gallery {
+ position: relative;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ margin-bottom: 20px;
+ }
+ #product-details .image-gallery img {
+ max-width: 100%;
+ border-radius: 10px;
+ transition: opacity 0.5s ease-in-out;
+ max-height: 400px;
+ object-fit: contain;
+ }
+ #product-details .gallery-btn {
+ position: absolute;
+ background-color: rgba(0,0,0,0.5);
+ color: white;
+ border: none;
+ font-size: 1.5rem;
+ padding: 10px;
+ border-radius: 50%;
+ cursor: pointer;
+ transition: background-color 0.3s;
+ z-index: 10;
+ }
+ #product-details .gallery-btn:hover {
+ background-color: rgba(0,0,0,0.8);
+ }
+ #product-details .gallery-btn.prev {
+ left: 10px;
+ }
+ #product-details .gallery-btn.next {
+ right: 10px;
+ }
+
+
+ #product-details h2 { margin-top: 0; }
+ #product-details p { line-height: 1.6; }
+ #product-details .details-actions {
+ display: flex;
+ gap: 15px;
+ margin-top: 15px;
+ flex-wrap: wrap;
+ }
+ #product-details label { font-weight: 600; }
+ #product-details select,
+ #product-details input[type="number"] {
+ padding: 6px;
+ border-radius: 5px;
+ border: none;
+ width: 80px;
+ text-align: center;
+ }
+ #product-details button {
+ padding: 10px 15px;
+ border-radius: 5px;
+ border: none;
+ font-weight: 700;
+ cursor: pointer;
+ transition: background-color 0.3s;
+ }
+ #add-to-cart-btn { background-color: #f9a825; color: #1a1a1a; }
+ #add-to-cart-btn:hover { background-color: #c7a500; }
+ #buy-now-btn { background-color: #c8102e; color: white; }
+ #buy-now-btn:hover { background-color: #90021b; }
+
+
+ #cart-items {
+ display: flex;
+ flex-direction: column;
+ gap: 15px;
+ }
+ .cart-item {
+ display: flex;
+ gap: 15px;
+ background: #3a3a3a;
+ border-radius: 10px;
+ padding: 10px;
+ align-items: center;
+ }
+ .cart-item img {
+ width: 100px;
+ height: 80px;
+ object-fit: cover;
+ border-radius: 6px;
+ }
+ .cart-item-info p { margin: 3px 0; }
+ .delete-btn {
+ background-color: #c8102e;
+ border: none;
+ color: white;
+ padding: 6px 10px;
+ border-radius: 5px;
+ font-weight: 700;
+ cursor: pointer;
+ transition: background-color 0.3s;
+ }
+ .delete-btn:hover { background-color: #90021b; }
+
+
+ #buy-all-btn {
+ background-color: #007acc;
+ color: white;
+ padding: 12px 18px;
+ border: none;
+ font-weight: 700;
+ border-radius: 7px;
+ margin-top: 20px;
+ cursor: pointer;
+ transition: background-color 0.3s;
+ }
+ #buy-all-btn:hover { background-color: #005a99; }
+
+
+ form {
+ padding: 20px;
+ border-radius: 10px;
+ max-width: 600px;
+ margin: 0 auto;
+ }
+ form label {
+ display: block;
+ margin-bottom: 6px;
+ font-weight: 700;
+ }
+ form input, form select {
+ width: 100%;
+ padding: 8px 10px;
+ margin-bottom: 15px;
+ border-radius: 6px;
+ border: none;
+ font-size: 1rem;
+ box-sizing: border-box;
+ }
+ #payment-methods {
+ display: flex;
+ gap: 20px;
+ margin-bottom: 15px;
+ }
+ #payment-methods label {
+ font-weight: normal;
+ cursor: pointer;
+ }
+ #payment-methods input[type="radio"] {
+ margin-left: 6px;
+ cursor: pointer;
+ }
+ #visa-info {
+ display: none;
+ background: #1a1a1a;
+ padding: 15px;
+ border-radius: 8px;
+ margin-bottom: 15px;
+ }
+ #confirm-payment-btn {
+ background-color: #c8102e;
+ color: white;
+ padding: 14px 20px;
+ border: none;
+ font-weight: 800;
+ font-size: 1.1rem;
+ border-radius: 10px;
+ cursor: pointer;
+ transition: background-color 0.3s;
+ width: 100%;
+ }
+ #confirm-payment-btn:hover { background-color: #90021b; }
+
+
+ #about p {
+ font-size: 1.1rem;
+ line-height: 1.7;
+ text-align: center;
+ }
+ .social-links {
+ text-align: center;
+ padding: 20px 0;
+ }
+ .social-links a {
+ margin: 0 20px;
+ display: inline-block;
+ transition: transform 0.2s ease-in-out;
+ }
+ .social-links a:hover {
+ transform: scale(1.15);
+ }
+ .social-links svg {
+ width: 50px;
+ height: 50px;
+ fill: #eee;
+ }
+
+
+ #product-details div {
+ margin-bottom: 15px;
+ }
+
+
+ @media (max-width: 768px) {
+ header {
+ flex-direction: column;
+ }
+ #logo {
+ flex-direction: row;
+ justify-content: center;
+ }
+ nav {
+ justify-content: center;
+ width: 100%;
+ margin-top: 10px;
+ }
+ }
+ @media (max-width: 600px) {
+ .products-grid {
+ grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+ }
+ .product-card img { height: 150px; }
+ .cart-item {
+ flex-direction: column;
+ align-items: flex-start;
+ }
+ .cart-item img {
+ width: 100%;
+ height: auto;
+ }
+ }
+ footer {
+ text-align: center;
+ padding: 20px;
+ background: #1a1a1a;
+ font-size: 0.9em;
+ color: #aaa;
+ }
+ </style>
 </head>
 <body>
 
+
 <div id="splash-screen">
-    <h1>LW44</h1>
-    <div class="loading-dots">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
+ <h1>LW44</h1>
+ <div class="loading-dots">
+ <span></span>
+ <span></span>
+ <span></span>
+ </div>
 </div>
+
+
+
+
 
 <div id="notification"></div>
 
+
 <header>
-    <div id="logo">
-        <h1>LH44</h1>
-    </div>
-    <nav>
-        <button onclick="showSection('home')">الرئيسية</button>
-        <button onclick="showSection('products')">المنتجات</button>
-        <button onclick="showSection('cart')">السلة <span class="cart-count"></span></button>
-        <button onclick="showSection('about')">عنا</button>
-        <button onclick="showSection('contact')">للتواصل معنا</button>
-    </nav>
-    <div id="cart-icon" onclick="showSection('cart')" title="عربة التسوق">
-        🛒 <span class="cart-count"></span>
-    </div>
+ <div id="logo">
+ <h1>LH44</h1>
+ </div>
+ <nav>
+ <button onclick="showSection('home')">الرئيسية</button>
+ <button onclick="showSection('products')">المنتجات</button>
+ <button onclick="showSection('about')">عنا</button>
+ <button onclick="showSection('contact')">للتواصل معنا</button>
+ <button onclick="showSection('cart')" class="cart-btn">
+ <div id="cart-icon" title="عربة التسوق">
+ 🛒 <span class="cart-count"></span>
+ </div>
+ </button>
+ </nav>
 </header>
 
+
+
+
 <section id="home" class="section active-section">
-    <h2>منتجات مميزة</h2>
-    <div id="home-products" class="products-grid"></div>
+ <h2>منتجات مميزة</h2>
+ <div id="home-products" class="products-grid"></div>
 </section>
+
+
+
 
 <section id="products" class="section">
-    <h2>جميع المنتجات</h2>
-    <div class="filter-controls">
-        <button onclick="filterProducts('all')" class="active">الكل</button>
-        <button onclick="filterProducts('t-shirt')">تيشيرتات</button>
-        <button onclick="filterProducts('hoodie')">هوديز</button>
-        <button onclick="filterProducts('accessory')">إكسسوارات</button>
-        <button onclick="filterProducts('decor')">ديكور</button>
-    </div>
-    <div id="products-list" class="products-grid"></div>
+ <h2>جميع المنتجات</h2>
+ <div class="filter-controls">
+ <button onclick="filterProducts('all')" class="active">الكل</button>
+ <button onclick="filterProducts('t-shirt')">تيشيرتات</button>
+ <button onclick="filterProducts('hoodie')">هوديز</button>
+ <button onclick="filterProducts('accessory')">إكسسوارات</button>
+ <button onclick="filterProducts('decor')">ديكور</button>
+ </div>
+ <div id="products-list" class="products-grid"></div>
 </section>
+
 
 <section id="about" class="section">
-    <h2>عنا</h2>
-    <p>
-        في <strong>LW44</strong>، نحن نشاركك شغف السرعة والأناقة المستوحاة من الأسطورة لويس هاميلتون وانتقاله إلى فريق فيراري. متجرنا مخصص لتقديم منتجات تعكس روح التحدي، الدقة، والتميز التي تمثل عالم الفورمولا 1. مرحبًا بك في عالمنا.
-    </p>
+ <h2>عنا</h2>
+ <p>
+ في **LW44**، نحن نشاركك شغف السرعة والأناقة المستوحاة من الأسطورة لويس هاميلتون وانتقاله إلى فريق فيراري. متجرنا مخصص لتقديم منتجات تعكس روح التحدي، الدقة، والتميز التي تمثل عالم الفورمولا 1. مرحبًا بك في عالمنا.
+ </p>
 </section>
+
 
 <section id="contact" class="section">
-    <h2>للتواصل معنا</h2>
-    <div class="social-links">
-       <a href="#" target="_blank" title="Instagram">
-    <svg viewBox="0 0 24 24">
-        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.644-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.058-1.689-.072-4.948-.072zM12 7.587c-2.434 0-4.413 1.979-4.413 4.413s1.979 4.413 4.413 4.413 4.413-1.979 4.413-4.413-1.979-4.413-4.413-4.413zm0 7.587c-1.745 0-3.174-1.429-3.174-3.174s1.429-3.174 3.174-3.174 3.174 1.429 3.174 3.174-1.429 3.174-3.174 3.174zm6.467-9.548c-.964 0-1.747.783-1.747 1.747s.783 1.747 1.747 1.747 1.747-.783 1.747-1.747-.783-1.747-1.747-1.747z"/>
-    </svg>
-</a>
-       <a href="#" target="_blank" title="Facebook">
-            <svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.323-1.325z"/></svg>
-        </a>
-        <a href="mailto:your-email@example.com" title="Email">
-            <svg viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
-        </a>
-    </div>
+ <h2>للتواصل معنا</h2>
+ <div class="social-links">
+ <a href="#" target="_blank" title="Instagram">
+ <svg viewBox="0 0 24 24">
+ <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.644-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.058-1.689-.072-4.948-.072zM12 7.587c-2.434 0-4.413 1.979-4.413 4.413s1.979 4.413 4.413 4.413 4.413-1.979 4.413-4.413-1.979-4.413-4.413-4.413zm0 7.587c-1.745 0-3.174-1.429-3.174-3.174s1.429-3.174 3.174-3.174 3.174 1.429 3.174 3.174-1.429 3.174-3.174 3.174zm6.467-9.548c-.964 0-1.747.783-1.747 1.747s.783 1.747 1.747 1.747 1.747-.783 1.747-1.747-.783-1.747-1.747-1.747z"/>
+ </svg>
+ </a>
+ <a href="#" target="_blank" title="Facebook">
+ <svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.323-1.325z"/></svg>
+ </a>
+ <a href="mailto:your-email@example.com" title="Email">
+ <svg viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
+ </a>
+ </div>
 </section>
+
 
 <section id="product-details" class="section">
-    <div class="image-gallery">
-        <button class="gallery-btn prev" onclick="changeImage(-1)">&#10094;</button>
-        <img id="detail-image" src="" alt="صورة المنتج" />
-        <button class="gallery-btn next" onclick="changeImage(1)">&#10095;</button>
-    </div>
+ <div class="image-gallery">
+ <button class="gallery-btn prev" onclick="changeImage(-1)">&#10094;</button>
+ <img id="detail-image" src="" alt="صورة المنتج" />
+ <button class="gallery-btn next" onclick="changeImage(1)">&#10095;</button>
+ </div>
 
-    <h2 id="detail-name"></h2>
-    <p id="detail-description"></p>
-    <p><strong>السعر: </strong><span id="detail-price"></span></p>
-    <div>
-        <label id="size-label" for="size-select" style="display:none;">المقاس:</label>
-        <select id="size-select" style="display:none;"></select>
-    </div>
-    <div>
-        <label for="quantity-input">الكمية:</label>
-        <input type="number" id="quantity-input" min="1" value="1" />
-    </div>
-    <div class="details-actions">
-        <button id="add-to-cart-btn">أضف إلى السلة</button>
-        <button id="buy-now-btn">اشترِ الآن</button>
-    </div>
+
+ <h2 id="detail-name"></h2>
+ <p id="detail-description"></p>
+ <p><strong>السعر: </strong><span id="detail-price"></span></p>
+ <div>
+ <label id="size-label" for="size-select" style="display:none;">المقاس:</label>
+ <select id="size-select" style="display:none;"></select>
+ </div>
+ <div>
+ <label for="quantity-input">الكمية:</label>
+ <input type="number" id="quantity-input" min="1" value="1" />
+ </div>
+ <div class="details-actions">
+ <button id="add-to-cart-btn">أضف إلى السلة</button>
+ <button id="buy-now-btn">اشترِ الآن</button>
+ </div>
 </section>
+
 
 <section id="cart" class="section">
-    <h2>سلة التسوق</h2>
-    <div id="cart-items"></div>
-    <button id="buy-all-btn">شراء كل المنتجات</button>
+ <h2>سلة التسوق</h2>
+ <div id="cart-items"></div>
+ <button id="buy-all-btn">شراء كل المنتجات</button>
 </section>
+
 
 <section id="checkout" class="section">
-    <h2>الدفع</h2>
-    <div id="checkout-summary" style="margin-bottom: 20px; font-weight: 600;"></div>
-    <form id="checkout-form">
-        <label for="full-name">الاسم الكامل:</label>
-        <input type="text" id="full-name" required />
-        <label for="address">العنوان:</label>
-        <input type="text" id="address" required />
-        <label for="phone">رقم الهاتف:</label>
-        <input type="tel" id="phone" required pattern="^\d{10,15}$" placeholder="مثال: 01012345678" />
-        <div id="payment-methods">
+ <h2>الدفع</h2>
+ <div id="checkout-summary" style="margin-bottom: 20px; font-weight: 600;"></div>
+ <form id="checkout-form">
+ <label for="full-name">الاسم الكامل:</label>
+ <input type="text" id="full-name" required />
+ <label for="address">العنوان:</label>
+ <input type="text" id="address" required />
+ <label for="phone">رقم الهاتف:</label>
+ <input type="tel" id="phone" required pattern="^\d{10,15}$" placeholder="مثال: 01012345678" />
+ <div id="payment-methods">
 
-            <label>
-                دفع كاش
-                <input type="radio" name="payment" value="cash" checked />
-            </label>
-            <label>
-                دفع بفيزا
-                <input type="radio" name="payment" value="visa" />
-            </label>
-        </div>
-        <div id="visa-info">
-            <label for="card-number">رقم البطاقة:</label>
-            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" pattern="[\d\s]{16,19}" />
-            <label for="expiry-date">تاريخ الانتهاء (MM/YY):</label>
-            <input type="text" id="expiry-date" placeholder="MM/YY" pattern="(0[1-9]|1[0-2])\/\d{2}" />
-            <label for="cvv">CVV:</label>
-            <input type="text" id="cvv" placeholder="123" pattern="\d{3,4}" />
-        </div>
-        <button type="submit" id="confirm-payment-btn">تأكيد الدفع</button>
-    </form>
+
+ <label>
+ دفع كاش
+ <input type="radio" name="payment" value="cash" checked />
+ </label>
+ <label>
+ دفع بفيزا
+ <input type="radio" name="payment" value="visa" />
+ </label>
+ </div>
+ <div id="visa-info">
+ <label for="card-number">رقم البطاقة:</label>
+ <input type="text" id="card-number" placeholder="1234 5678 9012 3456" pattern="[\d\s]{16,19}" />
+ <label for="expiry-date">تاريخ الانتهاء (MM/YY):</label>
+ <input type="text" id="expiry-date" placeholder="MM/YY" pattern="(0[1-9]|1[0-2])\/\d{2}" />
+ <label for="cvv">CVV:</label>
+ <input type="text" id="cvv" placeholder="123" pattern="\d{3,4}" />
+ </div>
+ <button type="submit" id="confirm-payment-btn">تأكيد الدفع</button>
+ </form>
 </section>
 
+
+
 <script>
-    const productsData = [
-        { id: 1, name: "هودي F1", price: 1200, images: ["f1.hoodie.jpg", "f1.hoodie.b.jpg"], description: "هودي أنيق بتصميم فيراري لراحة تدوم طوال اليوم.", hasSize: true, sizes: ["S", "L", "XL"], type: "hoodie" },
-        { id: 2, name: "تي-شيرت F1", price: 500, images: ["f1.t-shirt.jpg", "f1.t-shirt.b.jpg"], description: "تيشيرت خفيف وعصري، مثالي للارتداء اليومي.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
-        { id: 3, name: "زجاجة F1", price: 350, images: ["f1.bottle.jpg"], description: "زجاجة مياه رياضية عالية الجودة تحمل شعار فيراري.", hasSize: false, type: "accessory" },
-        { id: 4, name: "تيشيرت بولو ماكلارين", price: 500, images: ["mclaren.polo.jpg", "111.jpg"], description: "تيشيرت بولو بتصميم ماكلارين المميز، يجمع بين الأناقة والراحة.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
-        { id: 5, name: "كاب ماكلارين (لاندو نوريس)", price: 250, images: ["mclaren.cap.l.jpg", "mclaren.cap.l.b.jpg"], description: "كاب عصري يحمل شعار ماكلارين، مناسب لكل الأوقات.", hasSize: false, type: "accessory" },
-        { id: 6, name: "نموذج سيارة ماكلارين", price: 2200, images: ["mclaren.car.jpg", "mclaren.car.b.jpg"], description: "نموذج مصغر لسيارة ماكلارين F1، إضافة رائعة لمجموعتك.", hasSize: false, type: "decor" },
-        { id: 7, name: "خوذة ماكلارين (لاندو نوريس)", price: 10000, images: ["mclaren.f1.helmet.jpg", "mclaren.f1.helmet.b.jpg"], description: "نسخة طبق الأصل لخوذة فريق ماكلارين.", hasSize: false, type: "decor" },
-        { id: 8, name: "كاب ماكلارين أسود", price: 250, images: ["mclaren.cap.jpg", "mclaren.cap.b.jpg"], description: "كاب ماكلارين باللون الأسود الكلاسيكي.", hasSize: false, type: "accessory" },
-        { id: 9, name: "كاب فيراري لويس هاميلتون (44)", price: 250, images: ["scuderia-ferrari.cap.1.jpg", "scuderia-ferrari.cap.1.b.jpg"], description: "كاب فيراري رياضي بتصميم مميز.", hasSize: false, type: "accessory" },
-        { id: 10, name: "تيشيرت فيراري أحمر", price: 500, images: ["scuderia-ferrari.t-shirt.jpg", "scuderia-ferrari.t-shirt.b.jpg"], description: "تيشيرت أحمر كلاسيكي بشعار سكوديريا فيراري.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
-        { id: 11, name: "تيشيرت فيراري ابيض", price: 500, images: ["scuderia-ferrari.t-shirt.1.jpg", "scuderia-ferrari.t-shirt.1.b.jpg"], description: "تيشيرت فيراري بتصميم حديث وعصري.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
-        { id: 12, name: "كاب فيراري شارل ليكلير (16)", price: 250, images: ["5551.jpg", "3331.jpg"], description: "كاب أنيق باللون الأحمر.", hasSize: false, type: "accessory" },
-        { id: 13, name: " تيشيرت مرسيدس الاسود", price: 500, images: ["mercedes.t-shirt.jpg", "mercedes.t-shirt.b.jpg"], description: "تيشيرت فريق مرسيدس، مريح وأنيق.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
-        { id: 14, name: "تيشيرت مرسيدس الابيض", price: 500, images: ["mercedes.t-shirt.1.jpg", "mercedes.t-shirt.1.b.jpg"], description: "تيشيرت مرسيدس بتصميم رياضي.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
-        { id: 15, name: "كاب مرسيدس", price: 250, images: ["mercedes.cap.jpg", "mercedes.cap.b.jpg"], description: "كاب يحمل شعار مرسيدس.", hasSize: false, type: "accessory" },
-        { id: 16, name: "نموذج سيارة مرسيدس", price: 2200, images: ["mercedes.car.jpg", "mercedes.car.b.jpg"], description: "نموذج مصغر لسيارة مرسيدس F1.", hasSize: false, type: "decor" },
-        { id: 17, name: "تيشرت ريد بول (ماكس فريستابن)", price: 500, images: ["red-bull.t-shirt.jpg", "red-bull.t-shirt.b.jpg"], description: "تيشيرت فريق ريد بول، بتصميم جريء.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
-        { id: 18, name: "هودي ريد بول", price: 1200, images: ["red-bull.hoodie.jpg", "red-bull.hoodie.b.jpg"], description: "هودي دافئ وعملي بشعار ريد بول.", hasSize: true, sizes: ["S", "L", "XL"], type: "hoodie" },
-        { id: 19, name: "كاب F1", price: 250, images: ["f1.cap.jpg", "f1.cap.b.jpg"], description: "كاب ريد بول الرسمي.", hasSize: false, type: "accessory" },
-        { id: 20, name: "نموذج سيارة ريد بول", price: 2200, images: ["red-bull.car.jpg", "red-bull.car.b.jpg"], description: "نموذج مصغر لسيارة ريد بول.", hasSize: false, type: "decor" },
-    ];
-    const homeProductsIds = [1, 3, 5, 7, 9];
-    let cart = [];
-    let currentImageIndex = 0;
-
-    const homeProductsEl = document.getElementById('home-products');
-    const productsListEl = document.getElementById('products-list');
-    const cartItemsEl = document.getElementById('cart-items');
-    const cartCountEls = document.querySelectorAll('.cart-count');
-    const notificationEl = document.getElementById('notification');
-    let currentFilter = 'all';
-
-    function showSection(sectionId) {
-        document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active-section'));
-        document.getElementById(sectionId).classList.add('active-section');
-        window.location.hash = sectionId;
-        if (sectionId === 'cart') renderCart();
-        if (sectionId === 'products') renderProducts(currentFilter);
-    }
-
-    function showProductDetails(id) {
-        const prod = productsData.find(p => p.id === id);
-        if (!prod) {
-            console.error("المنتج غير موجود.");
-            showSection('products');
-            return;
-        }
-
-        currentProduct = prod;
-        currentImageIndex = 0;
-        updateProductDetails();
-
-        window.location.hash = `product-${id}`;
-        document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active-section'));
-        document.getElementById('product-details').classList.add('active-section');
-    }
-
-    // وظيفة جديدة لتحديث تفاصيل المنتج بناءً على الصورة الحالية
-    function updateProductDetails() {
-        const prod = currentProduct;
-        if (!prod) return;
-
-        detailImageEl.src = prod.images[currentImageIndex];
-        detailNameEl.textContent = prod.name;
-        detailDescriptionEl.textContent = prod.description;
-        detailPriceEl.textContent = `${prod.price} ج.م`;
-
-        sizeLabelEl.style.display = prod.hasSize ? 'block' : 'none';
-        sizeSelectEl.style.display = prod.hasSize ? 'inline-block' : 'none';
-        if (prod.hasSize) {
-            sizeSelectEl.innerHTML = prod.sizes.map(s => `<option value="${s}">${s}</option>`).join('');
-        }
-        quantityInputEl.value = 1;
-    }
-
-    // وظيفة جديدة للتنقل بين الصور
-    function changeImage(step) {
-        const newIndex = currentImageIndex + step;
-        if (newIndex >= 0 && newIndex < currentProduct.images.length) {
-            currentImageIndex = newIndex;
-            updateProductDetails();
-        }
-    }
-
-    function updateCartCount() {
-        let count = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCountEls.forEach(el => el.textContent = count > 0 ? count : '');
-    }
-    
-    // Non-blocking notification
-    function showNotification(message) {
-        notificationEl.textContent = message;
-        notificationEl.classList.add('visible');
-        setTimeout(() => {
-            notificationEl.classList.remove('visible');
-        }, 1000); // إظهار الرسالة لمدة 1 ثانية
-    }
+ const productsData = [
+ { id: 1, name: "هودي F1", price: 1200, images: ["f1.hoodie.jpg", "f1.hoodie.b.jpg"], description: "هودي أنيق بتصميم فيراري لراحة تدوم طوال اليوم.", hasSize: true, sizes: ["S", "L", "XL"], type: "hoodie" },
+ { id: 2, name: "تي-شيرت F1", price: 500, images: ["f1.t-shirt.jpg", "f1.t-shirt.b.jpg"], description: "تيشيرت خفيف وعصري، مثالي للارتداء اليومي.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+ { id: 3, name: "زجاجة F1", price: 350, images: ["f1.bottle.jpg"], description: "زجاجة مياه رياضية عالية الجودة تحمل شعار فيراري.", hasSize: false, type: "accessory" },
+ { id: 4, name: "تيشيرت بولو ماكلارين", price: 500, images: ["mclaren.polo.jpg", "111.jpg"], description: "تيشيرت بولو بتصميم ماكلارين المميز، يجمع بين الأناقة والراحة.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+ { id: 5, name: "كاب ماكلارين (لاندو نوريس)", price: 250, images: ["mclaren.cap.l.jpg", "mclaren.cap.l.b.jpg"], description: "كاب عصري يحمل شعار ماكلارين، مناسب لكل الأوقات.", hasSize: false, type: "accessory" },
+ { id: 6, name: "نموذج سيارة ماكلارين", price: 2200, images: ["mclaren.car.jpg", "mclaren.car.b.jpg"], description: "نموذج مصغر لسيارة ماكلارين F1، إضافة رائعة لمجموعتك.", hasSize: false, type: "decor" },
+ { id: 7, name: "خوذة ماكلارين (لاندو نوريس)", price: 10000, images: ["mclaren.f1.helmet.jpg", "mclaren.f1.helmet.b.jpg"], description: "نسخة طبق الأصل لخوذة فريق ماكلارين.", hasSize: false, type: "decor" },
+ { id: 8, name: "كاب ماكلارين أسود", price: 250, images: ["mclaren.cap.jpg", "mclaren.cap.b.jpg"], description: "كاب ماكلارين باللون الأسود الكلاسيكي.", hasSize: false, type: "accessory" },
+ { id: 9, name: "كاب فيراري لويس هاميلتون (44)", price: 250, images: ["scuderia-ferrari.cap.1.jpg", "scuderia-ferrari.cap.1.b.jpg"], description: "كاب فيراري رياضي بتصميم مميز.", hasSize: false, type: "accessory" },
+ { id: 10, name: "تيشيرت فيراري أحمر", price: 500, images: ["scuderia-ferrari.t-shirt.jpg", "scuderia-ferrari.t-shirt.b.jpg"], description: "تيشيرت أحمر كلاسيكي بشعار سكوديريا فيراري.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+ { id: 11, name: "تيشيرت فيراري ابيض", price: 500, images: ["scuderia-ferrari.t-shirt.1.jpg", "scuderia-ferrari.t-shirt.1.b.jpg"], description: "تيشيرت فيراري بتصميم حديث وعصري.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+ { id: 12, name: "كاب فيراري شارل ليكلير (16)", price: 250, images: ["5551.jpg", "3331.jpg"], description: "كاب أنيق باللون الأحمر.", hasSize: false, type: "accessory" },
+ { id: 13, name: " تيشيرت مرسيدس الاسود", price: 500, images: ["mercedes.t-shirt.jpg", "mercedes.t-shirt.b.jpg"], description: "تيشيرت فريق مرسيدس، مريح وأنيق.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+ { id: 14, name: "تيشيرت مرسيدس الابيض", price: 500, images: ["mercedes.t-shirt.1.jpg", "mercedes.t-shirt.1.b.jpg"], description: "تيشيرت مرسيدس بتصميم رياضي.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+ { id: 15, name: "كاب مرسيدس", price: 250, images: ["mercedes.cap.jpg", "mercedes.cap.b.jpg"], description: "كاب يحمل شعار مرسيدس.", hasSize: false, type: "accessory" },
+ { id: 16, name: "نموذج سيارة مرسيدس", price: 2200, images: ["mercedes.car.jpg", "mercedes.car.b.jpg"], description: "نموذج مصغر لسيارة مرسيدس F1.", hasSize: false, type: "decor" },
+ { id: 17, name: "تيشرت ريد بول (ماكس فريستابن)", price: 500, images: ["red-bull.t-shirt.jpg", "red-bull.t-shirt.b.jpg"], description: "تيشيرت فريق ريد بول، بتصميم جريء.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+ { id: 18, name: "هودي ريد بول", price: 1200, images: ["red-bull.hoodie.jpg", "red-bull.hoodie.b.jpg"], description: "هودي دافئ وعملي بشعار ريد بول.", hasSize: true, sizes: ["S", "L", "XL"], type: "hoodie" },
+ { id: 19, name: "كاب F1", price: 250, images: ["f1.cap.jpg", "f1.cap.b.jpg"], description: "كاب ريد بول الرسمي.", hasSize: false, type: "accessory" },
+ { id: 20, name: "نموذج سيارة ريد بول", price: 2200, images: ["red-bull.car.jpg", "red-bull.car.b.jpg"], description: "نموذج مصغر لسيارة ريد بول.", hasSize: false, type: "decor" },
+ ];
+ const homeProductsIds = [1, 3, 5, 7, 9];
+ let cart = [];
+ let currentImageIndex = 0;
 
 
-    function createProductCard(product) {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.innerHTML = `
-            <img src="${product.images[0]}" alt="${product.name}">
-            <p class="product-name">${product.name}</p>
-            <p class="product-price">${product.price} ج.م</p>
-            <div class="product-actions">
-                <button class="btn-details">عرض التفاصيل</button>
-                <button class="btn-add-cart">أضف إلى السلة</button>
-            </div>`;
-        card.querySelector('.btn-details').onclick = () => showProductDetails(product.id);
-        card.querySelector('.btn-add-cart').onclick = () => addToCart(product.id, 1, product.hasSize ? product.sizes[0] : null);
-        return card;
-    }
+ const homeProductsEl = document.getElementById('home-products');
+ const productsListEl = document.getElementById('products-list');
+ const cartItemsEl = document.getElementById('cart-items');
+ const cartCountEls = document.querySelectorAll('.cart-count');
+ const notificationEl = document.getElementById('notification');
+ let currentFilter = 'all';
+ let lastScrollY = window.scrollY;
 
-    function renderHomeProducts() {
-        homeProductsEl.innerHTML = '';
-        productsData.filter(p => homeProductsIds.includes(p.id)).forEach(prod => {
-            homeProductsEl.appendChild(createProductCard(prod));
-        });
-    }
 
-    function renderProducts(filterType = 'all') {
-        productsListEl.innerHTML = '';
-        let filteredProducts = productsData;
-        if (filterType !== 'all') {
-            filteredProducts = productsData.filter(p => p.type === filterType);
-        }
-        filteredProducts.forEach(prod => {
-            productsListEl.appendChild(createProductCard(prod));
-        });
+ function showSection(sectionId) {
+ document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active-section'));
+ document.getElementById(sectionId).classList.add('active-section');
+ window.location.hash = sectionId;
+ if (sectionId === 'cart') renderCart();
+ if (sectionId === 'products') renderProducts(currentFilter);
+ }
 
-        // Update active class on filter buttons
-        document.querySelectorAll('.filter-controls button').forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.textContent.includes(filterType === 'all' ? 'الكل' : (filterType === 't-shirt' ? 'تيشيرتات' : (filterType === 'hoodie' ? 'هوديز' : (filterType === 'accessory' ? 'إكسسوارات' : 'ديكور'))))) {
-                btn.classList.add('active');
-            }
-        });
-    }
 
-    function filterProducts(type) {
-        currentFilter = type;
-        renderProducts(currentFilter);
-    }
+ function showProductDetails(id) {
+ const prod = productsData.find(p => p.id === id);
+ if (!prod) {
+ console.error("المنتج غير موجود.");
+ showSection('products');
+ return;
+ }
 
-    const detailImageEl = document.getElementById('detail-image');
-    const detailNameEl = document.getElementById('detail-name');
-    const detailDescriptionEl = document.getElementById('detail-description');
-    const detailPriceEl = document.getElementById('detail-price');
-    const sizeSelectEl = document.getElementById('size-select');
-    const sizeLabelEl = document.getElementById('size-label');
-    const quantityInputEl = document.getElementById('quantity-input');
-    const addToCartBtn = document.getElementById('add-to-cart-btn');
-    const buyNowBtn = document.getElementById('buy-now-btn');
-    let currentProduct = null;
 
-    function addToCart(productId, quantity, size = null) {
-        const prod = productsData.find(p => p.id === productId);
-        if (!prod) return;
-        if (prod.hasSize && !size) {
-            showNotification("الرجاء اختيار المقاس");
-            showProductDetails(productId);
-            return;
-        }
+ currentProduct = prod;
+ currentImageIndex = 0;
+ updateProductDetails();
 
-        let existingItem = cart.find(item => item.product.id === productId && item.size === size);
-        if (existingItem) {
-            existingItem.quantity += quantity;
-        } else {
-            cart.push({ product: prod, quantity, size });
-        }
-        updateCartCount();
-        showNotification('تم إضافة المنتج إلى السلة');
-    }
 
-    function renderCart() {
-        if (cart.length === 0) {
-            cartItemsEl.innerHTML = '<p style="text-align:center;">السلة فارغة</p>';
-            document.getElementById('buy-all-btn').style.display = 'none';
-            return;
-        }
-        document.getElementById('buy-all-btn').style.display = 'block';
-        cartItemsEl.innerHTML = '';
-        cart.forEach((item, idx) => {
-            const div = document.createElement('div');
-            div.className = 'cart-item';
-            div.innerHTML = `
-                <img src="${item.product.images[0]}" alt="${item.product.name}">
-                <div class="cart-item-info">
-                    <p><strong>${item.product.name}</strong></p>
-                    ${item.size ? `<p>المقاس: ${item.size}</p>` : ''}
-                    <p>الكمية: ${item.quantity}</p>
-                    <p>السعر: ${item.product.price * item.quantity} ج.م</p>
-                </div>
-                <button class="delete-btn">حذف</button>`;
-            div.querySelector('.delete-btn').onclick = (event) => {
-                event.stopPropagation();
-                if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
-                    cart.splice(idx, 1);
-                    updateCartCount();
-                    renderCart();
-                }
-            };
-            cartItemsEl.appendChild(div);
-        });
-    }
+ window.location.hash = `product-${id}`;
+ document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active-section'));
+ document.getElementById('product-details').classList.add('active-section');
+ }
 
-    document.getElementById('buy-all-btn').onclick = () => {
-        if (cart.length === 0) {
-            showNotification('السلة فارغة');
-            return;
-        }
-        showSection('checkout');
-        renderCheckoutSummary();
-    };
 
-    function renderCheckoutSummary() {
-        const summaryDiv = document.getElementById('checkout-summary');
-        if (cart.length === 0) {
-            summaryDiv.innerHTML = '';
-            return;
-        }
-        let total = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
-        summaryDiv.innerHTML = `<h3>ملخص الطلب:</h3>
-        <ul>${cart.map(item => `<li>${item.product.name} ${item.size ? `(مقاس: ${item.size})` : ''} x ${item.quantity} = ${item.product.price * item.quantity} ج.م</li>`).join('')}</ul>
-        <strong>الإجمالي: ${total} ج.م</strong>`;
-    }
+ function updateProductDetails() {
+ const prod = currentProduct;
+ if (!prod) return;
 
-    const visaInfoDiv = document.getElementById('visa-info');
-    document.querySelectorAll('input[name="payment"]').forEach(radio => {
-        radio.addEventListener('change', (e) => {
-            visaInfoDiv.style.display = e.target.value === 'visa' ? 'block' : 'none';
-        });
-    });
 
-    document.getElementById('checkout-form').addEventListener('submit', (event) => {
-        event.preventDefault();
-        if (cart.length === 0) {
-            showNotification('السلة فارغة');
-            return;
-        }
-        showNotification('تم تأكيد الطلب! شكراً لتسوقك معنا.😁');
-        cart = [];
-        updateCartCount();
-        // Hide checkout form
-        document.getElementById('checkout').classList.remove('active-section');
-        // Wait for notification to show, then go to home
-        setTimeout(() => {
-            showSection('home');
-        }, 1500);
-        document.getElementById('checkout-form').reset();
-        visaInfoDiv.style.display = 'none';
-    });
-    
-    addToCartBtn.onclick = () => {
-        const qty = parseInt(quantityInputEl.value);
-        let size = currentProduct && currentProduct.hasSize ? sizeSelectEl.value : null;
-        addToCart(currentProduct.id, qty, size);
-    };
-    buyNowBtn.onclick = () => {
-        const qty = parseInt(quantityInputEl.value);
-        let size = currentProduct && currentProduct.hasSize ? sizeSelectEl.value : null;
-        addToCart(currentProduct.id, qty, size);
-        showSection('checkout');
-        renderCheckoutSummary();
-    };
+ detailImageEl.src = prod.images[currentImageIndex];
+ detailNameEl.textContent = prod.name;
+ detailDescriptionEl.textContent = prod.description;
+ detailPriceEl.textContent = `${prod.price} ج.م`;
 
-    document.addEventListener('DOMContentLoaded', () => {
-        renderHomeProducts();
-        renderProducts();
-        updateCartCount();
-        
-        const hash = window.location.hash.substring(1);
-        if (hash.startsWith('product-')) {
-            const productId = parseInt(hash.replace('product-', ''));
-            if (!isNaN(productId)) {
-                showProductDetails(productId);
-            } else {
-                showSection('home');
-            }
-        } else if (hash && document.getElementById(hash)) {
-            showSection(hash);
-        } else {
-            showSection('home');
-        }
 
-        // Hide splash screen after 500ms
-        setTimeout(() => {
-            document.getElementById('splash-screen').classList.add('hidden');
-        }, 500);
-    });
+ sizeLabelEl.style.display = prod.hasSize ? 'block' : 'none';
+ sizeSelectEl.style.display = prod.hasSize ? 'inline-block' : 'none';
+ if (prod.hasSize) {
+ sizeSelectEl.innerHTML = prod.sizes.map(s => `<option value="${s}">${s}</option>`).join('');
+ }
+ quantityInputEl.value = 1;
+ }
 
-    // لجعل وظيفة changeImage متاحة للزر في HTML
-    window.changeImage = changeImage;
-    window.filterProducts = filterProducts;
+
+ function changeImage(step) {
+ const newIndex = currentImageIndex + step;
+ if (newIndex >= 0 && newIndex < currentProduct.images.length) {
+ currentImageIndex = newIndex;
+ updateProductDetails();
+ }
+ }
+
+
+ function updateCartCount() {
+ let count = cart.reduce((sum, item) => sum + item.quantity, 0);
+ cartCountEls.forEach(el => el.textContent = count > 0 ? count : '');
+ }
+
+
+ function showNotification(message) {
+ notificationEl.textContent = message;
+ notificationEl.classList.add('visible');
+ setTimeout(() => {
+ notificationEl.classList.remove('visible');
+ }, 1000);
+ }
+
+
+ function createProductCard(product) {
+ const card = document.createElement('div');
+ card.className = 'product-card';
+ card.innerHTML = `
+ <img src="${product.images[0]}" alt="${product.name}">
+ <p class="product-name">${product.name}</p>
+ <p class="product-price">${product.price} ج.م</p>
+ <div class="product-actions">
+ <button class="btn-details">عرض التفاصيل</button>
+ <button class="btn-add-cart">أضف إلى السلة</button>
+ </div>`;
+ card.querySelector('.btn-details').onclick = () => showProductDetails(product.id);
+ card.querySelector('.btn-add-cart').onclick = () => addToCart(product.id, 1, product.hasSize ? product.sizes[0] : null);
+ return card;
+ }
+
+
+ function renderHomeProducts() {
+ homeProductsEl.innerHTML = '';
+ productsData.filter(p => homeProductsIds.includes(p.id)).forEach(prod => {
+ homeProductsEl.appendChild(createProductCard(prod));
+ });
+ }
+
+
+ function renderProducts(filterType = 'all') {
+ productsListEl.innerHTML = '';
+ let filteredProducts = productsData;
+ if (filterType !== 'all') {
+ filteredProducts = productsData.filter(p => p.type === filterType);
+ }
+ filteredProducts.forEach(prod => {
+ productsListEl.appendChild(createProductCard(prod));
+ });
+
+
+ document.querySelectorAll('.filter-controls button').forEach(btn => {
+ btn.classList.remove('active');
+ if (btn.textContent.includes(filterType === 'all' ? 'الكل' : (filterType === 't-shirt' ? 'تيشيرتات' : (filterType === 'hoodie' ? 'هوديز' : (filterType === 'accessory' ? 'إكسسوارات' : 'ديكور'))))) {
+ btn.classList.add('active');
+ }
+ });
+ }
+
+
+ function filterProducts(type) {
+ currentFilter = type;
+ renderProducts(currentFilter);
+ }
+
+
+ const detailImageEl = document.getElementById('detail-image');
+ const detailNameEl = document.getElementById('detail-name');
+ const detailDescriptionEl = document.getElementById('detail-description');
+ const detailPriceEl = document.getElementById('detail-price');
+ const sizeSelectEl = document.getElementById('size-select');
+ const sizeLabelEl = document.getElementById('size-label');
+ const quantityInputEl = document.getElementById('quantity-input');
+ const addToCartBtn = document.getElementById('add-to-cart-btn');
+ const buyNowBtn = document.getElementById('buy-now-btn');
+ let currentProduct = null;
+
+
+ function addToCart(productId, quantity, size = null) {
+ const prod = productsData.find(p => p.id === productId);
+ if (!prod) return;
+ if (prod.hasSize && !size) {
+ showNotification("الرجاء اختيار المقاس");
+ showProductDetails(productId);
+ return;
+ }
+
+
+ let existingItem = cart.find(item => item.product.id === productId && item.size === size);
+ if (existingItem) {
+ existingItem.quantity += quantity;
+ } else {
+ cart.push({ product: prod, quantity, size });
+ }
+ updateCartCount();
+ showNotification('تم إضافة المنتج إلى السلة');
+ }
+
+
+ function renderCart() {
+ if (cart.length === 0) {
+ cartItemsEl.innerHTML = '<p style="text-align:center;">السلة فارغة</p>';
+ document.getElementById('buy-all-btn').style.display = 'none';
+ return;
+ }
+ document.getElementById('buy-all-btn').style.display = 'block';
+ cartItemsEl.innerHTML = '';
+ cart.forEach((item, idx) => {
+ const div = document.createElement('div');
+ div.className = 'cart-item';
+ div.innerHTML = `
+ <img src="${item.product.images[0]}" alt="${item.product.name}">
+ <div class="cart-item-info">
+ <p><strong>${item.product.name}</strong></p>
+ ${item.size ? `<p>المقاس: ${item.size}</p>` : ''}
+ <p>الكمية: ${item.quantity}</p>
+ <p>السعر: ${item.product.price * item.quantity} ج.م</p>
+ </div>
+ <button class="delete-btn">حذف</button>`;
+ div.querySelector('.delete-btn').onclick = (event) => {
+ event.stopPropagation();
+ if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+ cart.splice(idx, 1);
+ updateCartCount();
+ renderCart();
+ }
+ };
+ cartItemsEl.appendChild(div);
+ });
+ }
+
+
+ document.getElementById('buy-all-btn').onclick = () => {
+ if (cart.length === 0) {
+ showNotification('السلة فارغة');
+ return;
+ }
+ showSection('checkout');
+ renderCheckoutSummary();
+ };
+
+
+ function renderCheckoutSummary() {
+ const summaryDiv = document.getElementById('checkout-summary');
+ if (cart.length === 0) {
+ summaryDiv.innerHTML = '';
+ return;
+ }
+ let total = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+ summaryDiv.innerHTML = `<h3>ملخص الطلب:</h3>
+ <ul>${cart.map(item => `<li>${item.product.name} ${item.size ? `(مقاس: ${item.size})` : ''} x ${item.quantity} = ${item.product.price * item.quantity} ج.م</li>`).join('')}</ul>
+ <strong>الإجمالي: ${total} ج.م</strong>`;
+ }
+
+
+ const visaInfoDiv = document.getElementById('visa-info');
+ document.querySelectorAll('input[name="payment"]').forEach(radio => {
+ radio.addEventListener('change', (e) => {
+ visaInfoDiv.style.display = e.target.value === 'visa' ? 'block' : 'none';
+ });
+ });
+
+
+ document.getElementById('checkout-form').addEventListener('submit', (event) => {
+ event.preventDefault();
+ if (cart.length === 0) {
+ showNotification('السلة فارغة');
+ return;
+ }
+ showNotification('تم تأكيد الطلب! شكراً لتسوقك معنا.😁');
+ cart = [];
+ updateCartCount();
+ document.getElementById('checkout').classList.remove('active-section');
+ setTimeout(() => {
+ showSection('home');
+ }, 1500);
+ document.getElementById('checkout-form').reset();
+ visaInfoDiv.style.display = 'none';
+ });
+
+
+ addToCartBtn.onclick = () => {
+ const qty = parseInt(quantityInputEl.value);
+ let size = currentProduct && currentProduct.hasSize ? sizeSelectEl.value : null;
+ addToCart(currentProduct.id, qty, size);
+ };
+ buyNowBtn.onclick = () => {
+ const qty = parseInt(quantityInputEl.value);
+ let size = currentProduct && currentProduct.hasSize ? sizeSelectEl.value : null;
+ addToCart(currentProduct.id, qty, size);
+ showSection('checkout');
+ renderCheckoutSummary();
+ };
+
+
+ window.addEventListener('scroll', () => {
+ const header = document.querySelector('header');
+ if (window.scrollY > lastScrollY && window.scrollY > 100) {
+ header.classList.add('hidden');
+ } else {
+ header.classList.remove('hidden');
+ }
+ lastScrollY = window.scrollY;
+ });
+
+
+ document.addEventListener('DOMContentLoaded', () => {
+ renderHomeProducts();
+ renderProducts();
+ updateCartCount();
+
+
+ const hash = window.location.hash.substring(1);
+ if (hash.startsWith('product-')) {
+ const productId = parseInt(hash.replace('product-', ''));
+ if (!isNaN(productId)) {
+ showProductDetails(productId);
+ } else {
+ showSection('home');
+ }
+ } else if (hash && document.getElementById(hash)) {
+ showSection(hash);
+ } else {
+ showSection('home');
+ }
+
+
+ setTimeout(() => {
+ document.getElementById('splash-screen').classList.add('hidden');
+ }, 500);
+ });
+
+
+ window.changeImage = changeImage;
+ window.filterProducts = filterProducts;
 </script>
 <footer>
-    &copy; 2025 موقع لمحبي F1
+ &copy; 2025 موقع لمحبي F1
 </footer>
+
+
+
+
 
 </body>
 </html>
