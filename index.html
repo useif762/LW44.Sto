@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head> 
+<head>
     <link rel="icon" href="LW33.jpg" type="image/jpg">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,6 +17,73 @@
             cursor: pointer;
         }
 
+        /* Splash Screen */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1a1a1a;
+            color: #eee;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+            gap: 20px;
+        }
+        #splash-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        #splash-screen h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            margin: 0;
+        }
+        .loading-dots {
+            display: flex;
+            gap: 5px;
+        }
+        .loading-dots span {
+            width: 10px;
+            height: 10px;
+            background: #f9a825;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+
+        /* Notification */
+        #notification {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            width: fit-content;
+            margin: auto;
+            background-color: #4f25f9;
+            color: #1a1a1a;
+            padding: 15px 30px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.5s ease-out;
+        }
+        #notification.visible {
+            transform: translateY(0);
+        }
+
         header {
             background: #c8102e;
             padding: 10px 20px;
@@ -24,6 +91,10 @@
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
+             position: fixed; /* يجعل الشريط ثابتاً في مكانه */
+    top: 0;          /* يثبته في أعلى الصفحة */
+    width: 100%;     /* يجعله يغطي عرض الشاشة بالكامل */
+    z-index: 100;    /* يجعله يظهر فوق بقية المحتوى */
         }
         header h1 {
             margin: 0;
@@ -92,10 +163,32 @@
             background: none;
             margin-top: 20px;
         }
+        
+        /* Filter controls */
+        .filter-controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .filter-controls button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 0 5px;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        .filter-controls button.active {
+            background-color: #c8102e;
+        }
+        .filter-controls button:hover {
+            background-color: #c8102e;
+        }
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill,minmax(230px,1fr));
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
             gap: 20px;
         }
 
@@ -135,7 +228,7 @@
             margin: 0 15px 15px 15px;
             gap: 8px;
         }
-        
+
         .btn-details, .btn-add-cart, .btn-buy-now {
             border: none;
             color: white;
@@ -199,7 +292,7 @@
             flex-wrap: wrap;
         }
         #product-details label { font-weight: 600; }
-        #product-details select, 
+        #product-details select,
         #product-details input[type="number"] {
             padding: 6px;
             border-radius: 5px;
@@ -318,7 +411,7 @@
             width: 100%;
         }
         #confirm-payment-btn:hover { background-color: #90021b; }
-        
+
         #about p {
             font-size: 1.1rem;
             line-height: 1.7;
@@ -355,7 +448,7 @@
         }
         @media (max-width: 600px) {
             .products-grid {
-                grid-template-columns: repeat(auto-fill,minmax(150px,1fr));
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
             .product-card img { height: 150px; }
             .cart-item {
@@ -377,6 +470,17 @@
     </style>
 </head>
 <body>
+
+<div id="splash-screen">
+    <h1>LW44</h1>
+    <div class="loading-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
+
+<div id="notification"></div>
 
 <header>
     <div id="logo">
@@ -401,6 +505,13 @@
 
 <section id="products" class="section">
     <h2>جميع المنتجات</h2>
+    <div class="filter-controls">
+        <button onclick="filterProducts('all')" class="active">الكل</button>
+        <button onclick="filterProducts('t-shirt')">تيشيرتات</button>
+        <button onclick="filterProducts('hoodie')">هوديز</button>
+        <button onclick="filterProducts('accessory')">إكسسوارات</button>
+        <button onclick="filterProducts('decor')">ديكور</button>
+    </div>
     <div id="products-list" class="products-grid"></div>
 </section>
 
@@ -419,7 +530,7 @@
         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.644-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.058-1.689-.072-4.948-.072zM12 7.587c-2.434 0-4.413 1.979-4.413 4.413s1.979 4.413 4.413 4.413 4.413-1.979 4.413-4.413-1.979-4.413-4.413-4.413zm0 7.587c-1.745 0-3.174-1.429-3.174-3.174s1.429-3.174 3.174-3.174 3.174 1.429 3.174 3.174-1.429 3.174-3.174 3.174zm6.467-9.548c-.964 0-1.747.783-1.747 1.747s.783 1.747 1.747 1.747 1.747-.783 1.747-1.747-.783-1.747-1.747-1.747z"/>
     </svg>
 </a>
-        <a href="#" target="_blank" title="Facebook">
+       <a href="#" target="_blank" title="Facebook">
             <svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.323-1.325z"/></svg>
         </a>
         <a href="mailto:your-email@example.com" title="Email">
@@ -493,43 +604,46 @@
 
 <script>
     const productsData = [
-        { id: 1, name: "هودي F1", price: 1200, images: ["f1.hoodie.jpg", "f1.hoodie.b.jpg"], description: "هودي أنيق بتصميم فيراري لراحة تدوم طوال اليوم.", hasSize: true, sizes: ["S", "L", "XL"]  },
-        { id: 2, name: "تي-شيرت F1", price: 500, images: ["f1.t-shirt.jpg", "f1.t-shirt.b.jpg"], description: "تيشيرت خفيف وعصري، مثالي للارتداء اليومي.", hasSize: true, sizes: ["S", "L", "XL"] },
-        { id: 3, name: "زجاجة F1", price: 350, images: ["f1.bottle.jpg"], description: "زجاجة مياه رياضية عالية الجودة تحمل شعار فيراري.", hasSize: false,  },
-        { id: 4, name: "تيشيرت بولو ماكلارين", price: 500, images: ["mclaren.polo.jpg", "111.jpg"], description: "تيشيرت بولو بتصميم ماكلارين المميز، يجمع بين الأناقة والراحة.", hasSize: true, sizes: ["S", "L", "XL"] },
-        { id: 5, name: "كاب ماكلارين (لاندو نوريس)", price: 250, images: ["mclaren.cap.l.jpg", "mclaren.cap.l.b.jpg"], description: "كاب عصري يحمل شعار ماكلارين، مناسب لكل الأوقات.", hasSize: false,  },
-        { id: 6, name: "نموذج سيارة ماكلارين", price: 2200, images: ["mclaren.car.jpg", "mclaren.car.b.jpg"], description: "نموذج مصغر لسيارة ماكلارين F1، إضافة رائعة لمجموعتك.", hasSize: false },
-        { id: 7, name: "خوذة ماكلارين (لاندو نوريس)", price: 10000, images: ["mclaren.f1.helmet.jpg", "mclaren.f1.helmet.b.jpg"], description: "نسخة طبق الأصل لخوذة فريق ماكلارين.", hasSize: false,  },
-        { id: 8, name: "كاب ماكلارين أسود", price: 250, images: ["mclaren.cap.jpg", "mclaren.cap.b.jpg"], description: "كاب ماكلارين باللون الأسود الكلاسيكي.", hasSize: false },
-        { id: 9, name: "كاب فيراري لويس هاميلتون (44)", price: 250, images: ["scuderia-ferrari.cap.1.jpg", "scuderia-ferrari.cap.1.b.jpg"], description: "كاب فيراري رياضي بتصميم مميز.", hasSize: false,  },
-        { id: 10, name: "تيشيرت فيراري أحمر", price: 500, images: ["scuderia-ferrari.t-shirt.jpg", "scuderia-ferrari.t-shirt.b.jpg"], description: "تيشيرت أحمر كلاسيكي بشعار سكوديريا فيراري.", hasSize: true, sizes: ["S", "L", "XL"] },
-        { id: 11, name: "تيشيرت فيراري ابيض", price: 500, images: ["scuderia-ferrari.t-shirt.1.jpg", "scuderia-ferrari.t-shirt.1.b.jpg"], description: "تيشيرت فيراري بتصميم حديث وعصري.", hasSize: true, sizes: ["S", "L", "XL"] },
-        { id: 12, name: "كاب فيراري شارل ليكلير (16)", price: 250, images: ["5551.jpg", "3331.jpg"], description: "كاب أنيق باللون الأحمر.", hasSize: false },
-        { id: 13, name: " تيشيرت مرسيدس الاسود", price: 500, images: ["mercedes.t-shirt.jpg", "mercedes.t-shirt.b.jpg"], description: "تيشيرت فريق مرسيدس، مريح وأنيق.", hasSize: true, sizes: ["S", "L", "XL"] },
-        { id: 14, name: "تيشيرت مرسيدس الابيض", price: 500, images: ["mercedes.t-shirt.1.jpg", "mercedes.t-shirt.1.b.jpg"], description: "تيشيرت مرسيدس بتصميم رياضي.", hasSize: true,  sizes: ["S", "L", "XL"] },
-        { id: 15, name: "كاب مرسيدس", price: 250, images: ["mercedes.cap.jpg", "mercedes.cap.b.jpg"], description: "كاب يحمل شعار مرسيدس.", hasSize: false },
-        { id: 16, name: "نموذج سيارة مرسيدس", price: 2200, images: ["mercedes.car.jpg", "mercedes.car.b.jpg"], description: "نموذج مصغر لسيارة مرسيدس F1.", hasSize: false },
-        { id: 17, name: "تيشرت ريد بول (ماكس فريستابن)", price: 500, images: ["red-bull.t-shirt.jpg", "red-bull.t-shirt.b.jpg"], description: "تيشيرت فريق ريد بول، بتصميم جريء.", hasSize: true,  sizes: ["S", "L", "XL"] },
-        { id: 18, name: "هودي ريد بول", price: 1200, images: ["red-bull.hoodie.jpg", "red-bull.hoodie.b.jpg"], description: "هودي دافئ وعملي بشعار ريد بول.", hasSize: true,  sizes: ["S", "L", "XL"] },
-        { id: 19, name: "كاب F1", price: 250, images: ["f1.cap.jpg", "f1.cap.b.jpg"], description: "كاب ريد بول الرسمي.", hasSize:false, },
-        { id: 20, name: "نموذج سيارة ريد بول", price: 2200, images: ["red-bull.car.jpg", "red-bull.car.b.jpg"], description: "نموذج مصغر لسيارة ريد بول.", hasSize: false },
+        { id: 1, name: "هودي F1", price: 1200, images: ["f1.hoodie.jpg", "f1.hoodie.b.jpg"], description: "هودي أنيق بتصميم فيراري لراحة تدوم طوال اليوم.", hasSize: true, sizes: ["S", "L", "XL"], type: "hoodie" },
+        { id: 2, name: "تي-شيرت F1", price: 500, images: ["f1.t-shirt.jpg", "f1.t-shirt.b.jpg"], description: "تيشيرت خفيف وعصري، مثالي للارتداء اليومي.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+        { id: 3, name: "زجاجة F1", price: 350, images: ["f1.bottle.jpg"], description: "زجاجة مياه رياضية عالية الجودة تحمل شعار فيراري.", hasSize: false, type: "accessory" },
+        { id: 4, name: "تيشيرت بولو ماكلارين", price: 500, images: ["mclaren.polo.jpg", "111.jpg"], description: "تيشيرت بولو بتصميم ماكلارين المميز، يجمع بين الأناقة والراحة.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+        { id: 5, name: "كاب ماكلارين (لاندو نوريس)", price: 250, images: ["mclaren.cap.l.jpg", "mclaren.cap.l.b.jpg"], description: "كاب عصري يحمل شعار ماكلارين، مناسب لكل الأوقات.", hasSize: false, type: "accessory" },
+        { id: 6, name: "نموذج سيارة ماكلارين", price: 2200, images: ["mclaren.car.jpg", "mclaren.car.b.jpg"], description: "نموذج مصغر لسيارة ماكلارين F1، إضافة رائعة لمجموعتك.", hasSize: false, type: "decor" },
+        { id: 7, name: "خوذة ماكلارين (لاندو نوريس)", price: 10000, images: ["mclaren.f1.helmet.jpg", "mclaren.f1.helmet.b.jpg"], description: "نسخة طبق الأصل لخوذة فريق ماكلارين.", hasSize: false, type: "decor" },
+        { id: 8, name: "كاب ماكلارين أسود", price: 250, images: ["mclaren.cap.jpg", "mclaren.cap.b.jpg"], description: "كاب ماكلارين باللون الأسود الكلاسيكي.", hasSize: false, type: "accessory" },
+        { id: 9, name: "كاب فيراري لويس هاميلتون (44)", price: 250, images: ["scuderia-ferrari.cap.1.jpg", "scuderia-ferrari.cap.1.b.jpg"], description: "كاب فيراري رياضي بتصميم مميز.", hasSize: false, type: "accessory" },
+        { id: 10, name: "تيشيرت فيراري أحمر", price: 500, images: ["scuderia-ferrari.t-shirt.jpg", "scuderia-ferrari.t-shirt.b.jpg"], description: "تيشيرت أحمر كلاسيكي بشعار سكوديريا فيراري.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+        { id: 11, name: "تيشيرت فيراري ابيض", price: 500, images: ["scuderia-ferrari.t-shirt.1.jpg", "scuderia-ferrari.t-shirt.1.b.jpg"], description: "تيشيرت فيراري بتصميم حديث وعصري.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+        { id: 12, name: "كاب فيراري شارل ليكلير (16)", price: 250, images: ["5551.jpg", "3331.jpg"], description: "كاب أنيق باللون الأحمر.", hasSize: false, type: "accessory" },
+        { id: 13, name: " تيشيرت مرسيدس الاسود", price: 500, images: ["mercedes.t-shirt.jpg", "mercedes.t-shirt.b.jpg"], description: "تيشيرت فريق مرسيدس، مريح وأنيق.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+        { id: 14, name: "تيشيرت مرسيدس الابيض", price: 500, images: ["mercedes.t-shirt.1.jpg", "mercedes.t-shirt.1.b.jpg"], description: "تيشيرت مرسيدس بتصميم رياضي.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+        { id: 15, name: "كاب مرسيدس", price: 250, images: ["mercedes.cap.jpg", "mercedes.cap.b.jpg"], description: "كاب يحمل شعار مرسيدس.", hasSize: false, type: "accessory" },
+        { id: 16, name: "نموذج سيارة مرسيدس", price: 2200, images: ["mercedes.car.jpg", "mercedes.car.b.jpg"], description: "نموذج مصغر لسيارة مرسيدس F1.", hasSize: false, type: "decor" },
+        { id: 17, name: "تيشرت ريد بول (ماكس فريستابن)", price: 500, images: ["red-bull.t-shirt.jpg", "red-bull.t-shirt.b.jpg"], description: "تيشيرت فريق ريد بول، بتصميم جريء.", hasSize: true, sizes: ["S", "L", "XL"], type: "t-shirt" },
+        { id: 18, name: "هودي ريد بول", price: 1200, images: ["red-bull.hoodie.jpg", "red-bull.hoodie.b.jpg"], description: "هودي دافئ وعملي بشعار ريد بول.", hasSize: true, sizes: ["S", "L", "XL"], type: "hoodie" },
+        { id: 19, name: "كاب F1", price: 250, images: ["f1.cap.jpg", "f1.cap.b.jpg"], description: "كاب ريد بول الرسمي.", hasSize: false, type: "accessory" },
+        { id: 20, name: "نموذج سيارة ريد بول", price: 2200, images: ["red-bull.car.jpg", "red-bull.car.b.jpg"], description: "نموذج مصغر لسيارة ريد بول.", hasSize: false, type: "decor" },
     ];
     const homeProductsIds = [1, 3, 5, 7, 9];
     let cart = [];
     let currentImageIndex = 0;
-    
+
     const homeProductsEl = document.getElementById('home-products');
     const productsListEl = document.getElementById('products-list');
     const cartItemsEl = document.getElementById('cart-items');
     const cartCountEls = document.querySelectorAll('.cart-count');
+    const notificationEl = document.getElementById('notification');
+    let currentFilter = 'all';
 
     function showSection(sectionId) {
         document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active-section'));
         document.getElementById(sectionId).classList.add('active-section');
         window.location.hash = sectionId;
         if (sectionId === 'cart') renderCart();
+        if (sectionId === 'products') renderProducts(currentFilter);
     }
-    
+
     function showProductDetails(id) {
         const prod = productsData.find(p => p.id === id);
         if (!prod) {
@@ -537,7 +651,7 @@
             showSection('products');
             return;
         }
-        
+
         currentProduct = prod;
         currentImageIndex = 0;
         updateProductDetails();
@@ -551,7 +665,7 @@
     function updateProductDetails() {
         const prod = currentProduct;
         if (!prod) return;
-        
+
         detailImageEl.src = prod.images[currentImageIndex];
         detailNameEl.textContent = prod.name;
         detailDescriptionEl.textContent = prod.description;
@@ -564,7 +678,7 @@
         }
         quantityInputEl.value = 1;
     }
-    
+
     // وظيفة جديدة للتنقل بين الصور
     function changeImage(step) {
         const newIndex = currentImageIndex + step;
@@ -578,6 +692,16 @@
         let count = cart.reduce((sum, item) => sum + item.quantity, 0);
         cartCountEls.forEach(el => el.textContent = count > 0 ? count : '');
     }
+    
+    // Non-blocking notification
+    function showNotification(message) {
+        notificationEl.textContent = message;
+        notificationEl.classList.add('visible');
+        setTimeout(() => {
+            notificationEl.classList.remove('visible');
+        }, 1000); // إظهار الرسالة لمدة 1 ثانية
+    }
+
 
     function createProductCard(product) {
         const card = document.createElement('div');
@@ -602,11 +726,28 @@
         });
     }
 
-    function renderProducts() {
+    function renderProducts(filterType = 'all') {
         productsListEl.innerHTML = '';
-        productsData.forEach(prod => {
+        let filteredProducts = productsData;
+        if (filterType !== 'all') {
+            filteredProducts = productsData.filter(p => p.type === filterType);
+        }
+        filteredProducts.forEach(prod => {
             productsListEl.appendChild(createProductCard(prod));
         });
+
+        // Update active class on filter buttons
+        document.querySelectorAll('.filter-controls button').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.textContent.includes(filterType === 'all' ? 'الكل' : (filterType === 't-shirt' ? 'تيشيرتات' : (filterType === 'hoodie' ? 'هوديز' : (filterType === 'accessory' ? 'إكسسوارات' : 'ديكور'))))) {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    function filterProducts(type) {
+        currentFilter = type;
+        renderProducts(currentFilter);
     }
 
     const detailImageEl = document.getElementById('detail-image');
@@ -624,7 +765,7 @@
         const prod = productsData.find(p => p.id === productId);
         if (!prod) return;
         if (prod.hasSize && !size) {
-            alert("الرجاء اختيار المقاس");
+            showNotification("الرجاء اختيار المقاس");
             showProductDetails(productId);
             return;
         }
@@ -636,7 +777,7 @@
             cart.push({ product: prod, quantity, size });
         }
         updateCartCount();
-        alert('تم إضافة المنتج إلى السلة');
+        showNotification('تم إضافة المنتج إلى السلة');
     }
 
     function renderCart() {
@@ -670,16 +811,16 @@
             cartItemsEl.appendChild(div);
         });
     }
-    
+
     document.getElementById('buy-all-btn').onclick = () => {
         if (cart.length === 0) {
-            alert('السلة فارغة');
+            showNotification('السلة فارغة');
             return;
         }
         showSection('checkout');
         renderCheckoutSummary();
     };
-    
+
     function renderCheckoutSummary() {
         const summaryDiv = document.getElementById('checkout-summary');
         if (cart.length === 0) {
@@ -691,7 +832,7 @@
         <ul>${cart.map(item => `<li>${item.product.name} ${item.size ? `(مقاس: ${item.size})` : ''} x ${item.quantity} = ${item.product.price * item.quantity} ج.م</li>`).join('')}</ul>
         <strong>الإجمالي: ${total} ج.م</strong>`;
     }
-    
+
     const visaInfoDiv = document.getElementById('visa-info');
     document.querySelectorAll('input[name="payment"]').forEach(radio => {
         radio.addEventListener('change', (e) => {
@@ -702,17 +843,22 @@
     document.getElementById('checkout-form').addEventListener('submit', (event) => {
         event.preventDefault();
         if (cart.length === 0) {
-            alert('السلة فارغة');
+            showNotification('السلة فارغة');
             return;
         }
-        alert ('تم تأكيد الطلب! شكراً لتسوقك معنا.😁'); 
+        showNotification('تم تأكيد الطلب! شكراً لتسوقك معنا.😁');
         cart = [];
         updateCartCount();
-        showSection('home');
+        // Hide checkout form
+        document.getElementById('checkout').classList.remove('active-section');
+        // Wait for notification to show, then go to home
+        setTimeout(() => {
+            showSection('home');
+        }, 1500);
         document.getElementById('checkout-form').reset();
         visaInfoDiv.style.display = 'none';
     });
-
+    
     addToCartBtn.onclick = () => {
         const qty = parseInt(quantityInputEl.value);
         let size = currentProduct && currentProduct.hasSize ? sizeSelectEl.value : null;
@@ -744,13 +890,19 @@
         } else {
             showSection('home');
         }
+
+        // Hide splash screen after 500ms
+        setTimeout(() => {
+            document.getElementById('splash-screen').classList.add('hidden');
+        }, 500);
     });
 
     // لجعل وظيفة changeImage متاحة للزر في HTML
     window.changeImage = changeImage;
+    window.filterProducts = filterProducts;
 </script>
 <footer>
-    &copy; 2025 موقع لمحبي F1 
+    &copy; 2025 موقع لمحبي F1
 </footer>
 
 </body>
